@@ -1,15 +1,41 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.scss'
 
-import ListItem from './components/atoms/ListItem'
+import Loading from './components/pages/Loading';
+import TodoList from './components/pages/TodoList';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState(null);
 
+  const handleOnAddTodo = (todo) => {
+    const newTodo = {
+      id: 'someRandomId',
+      userId: 'someRandomUserId',
+      title: todo,
+      completed: false
+    }
+    setData([newTodo, ...data]);
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/todos');
+      const fetchedData = await res.json();
+      setData(fetchedData);
+    }
+
+    fetchData();
+  },[]);
+
+  console.log(data);
   return (
     <div className="App">
-      App
-      <ListItem></ListItem>
+      {!data && 
+        <Loading />
+      }
+      {data && 
+        <TodoList data={data} onAddTodo={handleOnAddTodo} />
+      }
     </div>
   )
 }

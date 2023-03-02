@@ -1,8 +1,15 @@
 import React from 'react'
 
-const ListItem = () => {
+import styles from './ListItem.module.scss';
+
+const ListItem = ({userId, id, title, completed}) => {
   return (
-    <div>ListItem</div>
+    <li className={styles.container}>
+        <p>{id}</p>
+        <p>{userId}</p>
+        <p>{title}</p>
+        <p>{completed ? 'C' : 'X'}</p>
+    </li>
   )
 }
 
