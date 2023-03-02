@@ -11,12 +11,13 @@ const AddTodoForm = ({onAddTodo}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setNewTodo('');
         onAddTodo(newTodo);
     }
 
   return (
     <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleOnChange} />
+        <input type="text" onChange={handleOnChange} value={newTodo} />
         <button type="submit">Create New Todo</button>
     </form>
   )

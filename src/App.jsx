@@ -8,9 +8,10 @@ function App() {
   const [data, setData] = useState(null);
 
   const handleOnAddTodo = (todo) => {
+    const generateUniqueId = () => Math.round(Math.random() * 10000);
     const newTodo = {
-      id: 'someRandomId',
-      userId: 'someRandomUserId',
+      id: generateUniqueId(),
+      userId: generateUniqueId(),
       title: todo,
       completed: false
     }
@@ -27,7 +28,6 @@ function App() {
     fetchData();
   },[]);
 
-  console.log(data);
   return (
     <div className="App">
       {!data && 
