@@ -3,7 +3,7 @@ import ListItem from '../../atoms/ListItem/ListItem'
 
 import styles from './TheTodoList.module.scss';
 
-const TheTodoList = ({data, }) => {
+const TheTodoList = ({todos}) => {
   return (
     <div className={styles.container}>
       <div className={styles.listHead}>
@@ -13,7 +13,7 @@ const TheTodoList = ({data, }) => {
         <p>Completed</p>
       </div>
       <ul>
-        {data.map((item) => (
+        {todos.map((item) => (
           <ListItem 
             key={`item-${item.id}`}
             userId={item.userId}

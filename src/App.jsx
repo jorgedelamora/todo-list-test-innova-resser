@@ -1,43 +1,37 @@
-import { useState, useEffect } from 'react'
-import './App.scss'
-
+import React, {useState, useEffect} from 'react';
+import { useQuery } from 'react-query';
 import Loading from './components/pages/Loading';
 import TodoList from './components/pages/TodoList';
+import { fetchData, generateUniqueId } from './utils';
 
+import './App.scss'
 function App() {
-  const [data, setData] = useState(null);
-
+  const [todos, setTodos] = useState(null);
+  const {data, error, isLoading} = useQuery('data', fetchData);
+  
   const handleOnAddTodo = (todo) => {
-    const generateUniqueId = () => Math.round(Math.random() * 10000);
     const newTodo = {
       id: generateUniqueId(),
       userId: generateUniqueId(),
       title: todo,
       completed: false
     }
-    setData([newTodo, ...data]);
+    setTodos((todos) => [newTodo, ...todos]);
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('https://jsonplaceholder.typicode.com/todos');
-      const fetchedData = await res.json();
-      setData(fetchedData);
-    }
+    setTodos(data);
+  },[data])
+  
+  if (isLoading || !todos) {
+    return <Loading />
+  }
 
-    fetchData();
-  },[]);
+  if(error) {
+    return <Error />
+  }
 
-  return (
-    <div className="App">
-      {!data && 
-        <Loading />
-      }
-      {data && 
-        <TodoList data={data} onAddTodo={handleOnAddTodo} />
-      }
-    </div>
-  )
+  return <TodoList todos={todos} onAddTodo={handleOnAddTodo} />
 }
 
 export default App
