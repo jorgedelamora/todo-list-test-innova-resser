@@ -1,0 +1,7 @@
+.input {
+    border: none;
+    border-bottom:  1px solid lightgray;
+    &:focus-visible {
+        border: 1px solid lightgray;
+    }
+}

@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+
+import styles from './AddTodoForm.module.scss';
 
 const AddTodoForm = ({onAddTodo}) => {
-
     const [newTodo, setNewTodo] = useState('');
 
     const handleOnChange = (e) => {
@@ -11,13 +12,17 @@ const AddTodoForm = ({onAddTodo}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setNewTodo('');
+        if(!newTodo){
+          setNewTodo('');
+          return;
+        }
         onAddTodo(newTodo);
+        setNewTodo('');
     }
 
   return (
     <form onSubmit={handleSubmit}>
-        <input type="text" onChange={handleOnChange} value={newTodo} />
+        <input className={styles.input} type="text" onChange={handleOnChange} value={newTodo} />
         <button type="submit">Create New Todo</button>
     </form>
   )

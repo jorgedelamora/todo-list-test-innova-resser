@@ -1,7 +1,22 @@
 .container {
     width: 100%;
     height: auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    list-style: none;
+    padding: 0.4rem 0;
+    border-top: 1px solid lightgray;
+    transition: background-color 0.4s ease-in-out;
+}
+
+.completed {
+    background-color: lightgray;
+}
+
+.completedIcon {
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+}
+
+.textAlignStart {
+    text-align: start;
 }

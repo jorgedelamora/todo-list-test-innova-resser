@@ -7,7 +7,7 @@ import { fetchData, generateUniqueId } from './utils';
 import './App.scss'
 function App() {
   const [todos, setTodos] = useState(null);
-  const {data, error, isLoading} = useQuery('data', fetchData);
+  const {data, error, isLoading, refetch} = useQuery('data', fetchData);
   
   const handleOnAddTodo = (todo) => {
     const newTodo = {
@@ -17,6 +17,20 @@ function App() {
       completed: false
     }
     setTodos((todos) => [newTodo, ...todos]);
+  }
+
+  const handleOnToggleCompleted = (id) => {
+    const updatedTodos = todos.map((todo) => {
+      if(todo.id === id){
+        todo.completed = !todo.completed
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  }
+
+  const handleOnRefresh = () => {
+    refetch();
   }
 
   useEffect(() => {
@@ -31,7 +45,7 @@ function App() {
     return <Error />
   }
 
-  return <TodoList todos={todos} onAddTodo={handleOnAddTodo} />
+  return <TodoList todos={todos} onAddTodo={handleOnAddTodo} onToggleCompleted={handleOnToggleCompleted} onRefresh={handleOnRefresh}/>
 }
 
 export default App

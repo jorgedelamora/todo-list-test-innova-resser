@@ -1,7 +1,14 @@
 .container {
     cursor: pointer;
+    font-size: 1rem;
+    transition: font-size 0.1s ease-in;
+    &:hover {
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
 }
 
 .selected {
     font-weight: 700;
+    font-size: 1.3rem;
 }
