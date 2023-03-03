@@ -5,9 +5,10 @@ import TodoList from './components/pages/TodoList';
 import { fetchData, generateUniqueId } from './utils';
 
 import './App.scss'
+
 function App() {
   const [todos, setTodos] = useState(null);
-  const {data, error, isLoading, refetch} = useQuery('data', fetchData);
+  const {data, error, isLoading, refetch} = useQuery('data', fetchData, {manual: true});
   
   const handleOnAddTodo = (todo) => {
     const newTodo = {
@@ -29,10 +30,6 @@ function App() {
     setTodos(updatedTodos);
   }
 
-  const handleOnRefresh = () => {
-    refetch();
-  }
-
   useEffect(() => {
     setTodos(data);
   },[data])
@@ -45,7 +42,14 @@ function App() {
     return <Error />
   }
 
-  return <TodoList todos={todos} onAddTodo={handleOnAddTodo} onToggleCompleted={handleOnToggleCompleted} onRefresh={handleOnRefresh}/>
+  return (
+    <TodoList 
+      todos={todos} 
+      onAddTodo={handleOnAddTodo} 
+      onToggleCompleted={handleOnToggleCompleted} 
+      onRefresh={() => refetch()}
+    />
+  )
 }
 
 export default App
